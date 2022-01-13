@@ -1,7 +1,9 @@
+import Title from '../components/Title'
+
 export default function Index() {
   return (
     <div>
-      <h1>Index page</h1>
+      <Title />
     </div>
-  );
+  )
 }
