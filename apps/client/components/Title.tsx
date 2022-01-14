@@ -6,15 +6,16 @@ const Wrapper = styled.div`
 `
 
 const TitleStyles = styled.h1`
-  font-size: 1.5em;
+  color: #2D1F63;
+  font-size: 95px;
+  font-weight: 600;
   text-align: center;
-  color: blue;
 `
 
 export default function Title() {
   return (
     <Wrapper>
-      <TitleStyles>Title</TitleStyles>
+      <TitleStyles>Welcome to chat!</TitleStyles>
       <Auth />
     </Wrapper>
   )
