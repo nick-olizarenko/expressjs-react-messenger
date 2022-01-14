@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "private": true,
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "lint": "eslint 'src/**/*.ts' --cache",
+    "lint:fix": "pnpm exec lint -- --fix"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "@types/node": "~17.0.4",
+    "ts-node": "~10.4.0",
+    "eslint": "7.11.0",
+    "@typescript-eslint/eslint-plugin": "~5.8.0",
+    "@typescript-eslint/parser": "~5.8.1"
+  }
+}
