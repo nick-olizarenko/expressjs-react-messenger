@@ -1,5 +1,13 @@
 import styled from 'styled-components'
 
+export default function Layout({ children }) {
+  return (
+    <Container>
+      <main>{children}</main>
+    </Container>
+  )
+}
+
 const background = '/background.png'
 
 const Container = styled.div`
@@ -16,11 +24,3 @@ const Container = styled.div`
   background-position: bottom;
   background-color: white;
 `
-
-export default function Layout({ children }) {
-  return (
-    <Container>
-      <main>{children}</main>
-    </Container>
-  )
-}
