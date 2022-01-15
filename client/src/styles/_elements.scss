@@ -1,0 +1,10 @@
+html {
+  body {
+    font-family: $font;
+    background: $background-grey;
+  }
+}
+
+a, input, button {
+  transition: all .4s;
+}
