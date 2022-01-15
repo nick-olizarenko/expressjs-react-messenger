@@ -1,10 +1,10 @@
-import Title from '../components/Title'
+import Welcome from '../components/Welcome'
 
 
 export default function Index() {
   return (
     <>
-      <Title />
+      <Welcome />
     </>
   )
 }
