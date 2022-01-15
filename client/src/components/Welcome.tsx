@@ -1,17 +1,30 @@
 import styled from 'styled-components'
 import NextIcon from './icons/NextIcon'
 
-export default function Welcome() {
+export default function Welcome () {
   return (
-    <div>
+    <WelcomeContainer>
       <TitleStyles>Join us to chat!</TitleStyles>
       <Form>
         <Input placeholder='Whats your name?' type='text' />
         <Button><NextIcon /></Button>
       </Form>
-    </div>
+    </WelcomeContainer>
   )
 }
+
+const background = '/background.png'
+
+const WelcomeContainer = styled.div`
+  background-image: url(${background});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  float: left;
+`
 
 const TitleStyles = styled.h1`
   color: #2D1F63;
@@ -23,28 +36,29 @@ const TitleStyles = styled.h1`
 
 const Form = styled.form`
   position: relative;
-  width: 440px;
+  width: 435px;
   margin: 0 auto;
 `
 
 const Input = styled.input`
-  display: flex;
-  width: calc(100% - 15px);
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: calc(100% - 71px);
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
   text-align: left;
   font-size: 20px;
   color: #7976d9;
-  border: none;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 15px;
+  padding: 15px 40px 15px 25px;
   border-radius: 50px;
   outline: none;
   background-color: rgba(152, 160, 249, 0.28);
+  border: 3px solid transparent;
 
   ::placeholder {
     color: #7976d9;
     font-weight: 400;
+  }
+
+  :focus {
+    border: 3px solid #7976d9;
   }
 `
 
@@ -57,10 +71,10 @@ const Button = styled.button`
   color: #7976d9;
   border-radius: 3px;
   top: 10px;
-  right: 15px;
+  right: 10px;
   padding: 0;
 
   :hover {
-    color: #b1a8e2;
+    opacity: .7;
   }
 `

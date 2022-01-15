@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 
-import '../styles/main.css'
+import '../styles/app.scss'
 
 export default function MyApp({ Component, pageProps }) {
   return (
