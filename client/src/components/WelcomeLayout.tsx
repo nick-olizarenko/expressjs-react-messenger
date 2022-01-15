@@ -1,12 +1,29 @@
 import styled from 'styled-components'
-import NextIcon from './icons/NextIcon'
 
-export default function Welcome () {
+import NextIcon from './icons/NextIcon'
+import { User } from '../types/User'
+import { useCallback, useState } from 'react'
+
+interface Props {
+  onNext: (user: User) => void
+}
+
+export default function WelcomeLayout ({ onNext }: Props) {
+  const [name, setName] = useState<string>()
+
+  const onSubmit = useCallback(() => {
+    if (!name || !name.length) {
+      return
+    }
+
+    onNext({ id: 1, name })
+  }, [onNext, name])
+
   return (
     <WelcomeContainer>
-      <TitleStyles>Join us to chat!</TitleStyles>
-      <Form>
-        <Input placeholder='Whats your name?' type='text' />
+      <Title>Join us to chat!</Title>
+      <Form onSubmit={onSubmit}>
+        <Input placeholder='Whats your name?' type='text' onChange={(event) => setName(event.target.value)} />
         <Button><NextIcon /></Button>
       </Form>
     </WelcomeContainer>
@@ -26,7 +43,7 @@ const WelcomeContainer = styled.div`
   float: left;
 `
 
-const TitleStyles = styled.h1`
+const Title = styled.h1`
   color: #2D1F63;
   font-size: 60px;
   font-weight: 600;
