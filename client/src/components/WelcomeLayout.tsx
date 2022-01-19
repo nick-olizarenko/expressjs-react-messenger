@@ -87,7 +87,7 @@ const Button = styled.button`
   background: transparent;
   color: #7976d9;
   border-radius: 3px;
-  top: 10px;
+  top: 12px;
   right: 10px;
   padding: 0;
 

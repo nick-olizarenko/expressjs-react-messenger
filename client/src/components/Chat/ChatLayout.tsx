@@ -1,26 +1,23 @@
 import styled from 'styled-components'
 
 import { User } from '../../types/User'
+import Header from '../Header'
+import ChatsList from './ChatsList/ChatsList'
 
 interface Props {
   user: User
 }
 
-export default function ChatLayout ({ user }: Props) {
+export default function ChatLayout({ user }: Props) {
   return (
     <ChatContainer>
-      {user.name}
+      <Header user={user} />
+      <ChatsList userId={user.id} />
     </ChatContainer>
   )
 }
 
-const background = '/background.png'
-
 const ChatContainer = styled.div`
-  background-image: url(${background});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: bottom;
   background-color: white;
   width: 100%;
   height: 100%;
