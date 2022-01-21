@@ -1,29 +1,37 @@
+import { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import Axios from 'axios'
 
 import NextIcon from './icons/NextIcon'
-import { User } from '../types/User'
-import { useCallback, useState } from 'react'
+import { User } from '../../../types'
 
 interface Props {
   onNext: (user: User) => void
 }
 
 export default function WelcomeLayout ({ onNext }: Props) {
-  const [name, setName] = useState<string>()
+  const [nickname, setNickname] = useState<string>()
 
-  const onSubmit = useCallback(() => {
-    if (!name || !name.length) {
-      return
+  const onSubmit = useCallback(async (event: Event) => {
+    event.preventDefault();
+
+    try {
+      if (!nickname || !nickname.length) {
+        return
+      }
+
+      const { data } = await Axios.post('/api/user', { nickname })
+      onNext(data.user)
+    } catch (err) {
+      console.error('Error creating user', err)
     }
-
-    onNext({ id: 1, name })
-  }, [onNext, name])
+  }, [onNext, nickname])
 
   return (
     <WelcomeContainer>
       <Title>Join us to chat!</Title>
-      <Form onSubmit={onSubmit}>
-        <Input placeholder='Whats your name?' type='text' onChange={(event) => setName(event.target.value)} />
+      <Form onSubmit={event => onSubmit(event)}>
+        <Input placeholder='Whats your name?' type='text' onChange={(event) => setNickname(event.target.value)} />
         <Button><NextIcon /></Button>
       </Form>
     </WelcomeContainer>

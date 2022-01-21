@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { User } from '../../types/User'
+import { User } from '../../../../types'
 import Header from '../Header'
 import ChatsList from './ChatsList/ChatsList'
 

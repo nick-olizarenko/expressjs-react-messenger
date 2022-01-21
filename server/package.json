@@ -2,22 +2,28 @@
   "name": "server",
   "version": "0.0.1",
   "private": true,
-  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "dev": "node_modules/.bin/ts-node src/server.ts",
+    "dev": "node_modules/.bin/nodemon src/server.ts",
     "lint": "node_modules/.bin/eslint 'src/**/*.ts' --cache",
-    "lint:fix": "pnpm exec lint -- --fix"
+    "lint:fix": "yarn run lint -- --fix"
   },
   "dependencies": {
-
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
     "@types/node": "~17.0.4",
-    "ts-node": "~10.4.0",
-    "eslint": "7.11.0",
+    "@types/socket.io": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "~5.8.0",
-    "@typescript-eslint/parser": "~5.8.1"
+    "@typescript-eslint/parser": "~5.8.1",
+    "eslint": "7.11.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "~10.4.0"
   }
 }

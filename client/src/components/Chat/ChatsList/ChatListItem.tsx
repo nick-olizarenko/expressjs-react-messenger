@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { ChatPreview } from '../../../types/Chat'
+import { ChatPreview } from '../../../../../types'
 
 export default function ChatListItem(chat: ChatPreview) {
   return (

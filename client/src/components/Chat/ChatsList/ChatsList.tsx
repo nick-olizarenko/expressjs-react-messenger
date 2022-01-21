@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import SearchIcon from '../../icons/SearchIcon'
 import ChatListItem from './ChatListItem'
-import { ChatPreview } from '../../../types/Chat'
+import { ChatPreview } from '../../../../../types'
 import { useMemo, useState } from 'react'
 
 interface Props {

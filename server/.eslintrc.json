@@ -6,10 +6,6 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": ["./tsconfig.eslint.json"],
-      "sourceType": "module"
-    },
     "rules": {
       "@typescript-eslint/camelcase": "off",
       "@typescript-eslint/explicit-function-return-type": "off",

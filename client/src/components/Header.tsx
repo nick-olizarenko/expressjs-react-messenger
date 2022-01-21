@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { User } from '../types/User'
+import { User } from '../../../types'
 import NotificationIcon from './icons/NotificationIcon'
 import HeartIcon from './icons/HeartIcon'
 import UserIcon from './icons/UserIcon'
@@ -18,7 +18,7 @@ export default function Header({ user }: Props) {
         <Avatar>
           <img src={`https://picsum.photos/id/${user.id}/100`}/>
         </Avatar>
-        <span>{user.name}</span>
+        <span>{user.nickname}</span>
       </Account>
       <RightMenu>
         <Tabs>
