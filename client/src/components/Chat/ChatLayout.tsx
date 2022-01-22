@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { User } from '../../../../types'
 import Header from '../Header'
 import ChatsList from './ChatsList/ChatsList'
+import SelectChat from './SelectChat'
 
 interface Props {
   user: User
@@ -13,6 +14,7 @@ export default function ChatLayout({ user }: Props) {
     <ChatContainer>
       <Header user={user} />
       <ChatsList userId={user.id} />
+      <SelectChat />
     </ChatContainer>
   )
 }
