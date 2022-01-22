@@ -4,17 +4,28 @@ import { User } from '../../../../types'
 import Header from '../Header'
 import ChatsList from './ChatsList/ChatsList'
 import SelectChat from './SelectChat'
+import ChatForm from './Messages'
+import { useState } from 'react'
 
 interface Props {
   user: User
 }
-
 export default function ChatLayout({ user }: Props) {
+  const [state, setState] = useState('start')
+
+
   return (
     <ChatContainer>
       <Header user={user} />
       <ChatsList userId={user.id} />
-      <SelectChat />
+      <div>
+        {state === 'start' && (
+          <SelectChat selectChat={() => setState('select-chat') } />
+        )}
+
+        {state === 'select-chat' && <ChatForm />}
+      </div>
+
     </ChatContainer>
   )
 }
