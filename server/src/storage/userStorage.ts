@@ -1,11 +1,11 @@
 import { User } from '../../../types'
 
-export default class UsersStorage {
+export default class UserStorage {
   private users: User[] = []
-  private getNextUserId = () => this.users.length + 1
+  private getNextId = () => this.users.length + 1
 
   addUser (nickname: string): User {
-    const id = this.getNextUserId()
+    const id = this.getNextId()
 
     this.users.push({ id, nickname })
 
