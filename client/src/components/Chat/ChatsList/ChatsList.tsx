@@ -13,15 +13,13 @@ export default function ChatsList({ userId }: Props) {
   const chats: ChatPreview[] = [
     {
       id: 1,
-      avatar: 'https://picsum.photos/id/1/100',
       title: 'Super Dooper',
-      lastMessage: { author: 'Nick', text: 'Wow! Incredible!', date: '22:44' }
+      lastMessage: { sender: {id: 1, nickname: 'Nick'}, text: 'Wow! Incredible!', date: '22:44' }
     },
     {
       id: 2,
-      avatar: 'https://picsum.photos/id/100/100',
       title: 'Vladyslav',
-      lastMessage: { author: 'Hanna', text: 'LMAO! Cool!', date: '18:33' }
+      lastMessage: { sender: {id: 1, nickname: 'Nick'}, text: 'LMAO! Cool!', date: '18:33' }
     }
   ]
   const [search, setSearch] = useState<string>()

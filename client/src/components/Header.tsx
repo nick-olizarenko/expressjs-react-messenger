@@ -5,6 +5,7 @@ import NotificationIcon from './icons/NotificationIcon'
 import HeartIcon from './icons/HeartIcon'
 import UserIcon from './icons/UserIcon'
 import InfoIcon from './icons/InfoIcon'
+import { useRouter } from 'next/router'
 
 
 interface Props {
@@ -12,11 +13,16 @@ interface Props {
 }
 
 export default function Header({ user }: Props) {
+  const router = useRouter()
+  const onCreateChat = () => {
+    router.push({ query: { chatId: 'new' } })
+  }
+
   return (
     <HeaderContainer>
       <Account>
         <Avatar>
-          <img src={`https://picsum.photos/id/${user.id}/100`}/>
+          <img src={`https://picsum.photos/id/${user.id}/100`} />
         </Avatar>
         <span>{user.nickname}</span>
       </Account>
@@ -25,16 +31,7 @@ export default function Header({ user }: Props) {
           <span>Messenger</span>
         </Tabs>
         <Settings>
-          <Button>
-            <NotificationIcon />
-          </Button>
-          <Button>
-            <HeartIcon />
-          </Button>
-          <Button>
-            <UserIcon />
-          </Button>
-          <Button>
+          <Button onClick={() => onCreateChat()}>
             <InfoIcon />
           </Button>
         </Settings>
@@ -57,7 +54,7 @@ const Account = styled.div`
   display: flex;
   padding-left: 15px;
 
-  span{
+  span {
     padding: 23px 10px;
     font-size: 16px;
     font-weight: 600;
@@ -71,7 +68,7 @@ const Avatar = styled.div`
   display: inline-block;
   padding: 12px 0;
 
-  img{
+  img {
     width: 100%;
     height: 100%;
     border-radius: 100px;
@@ -82,7 +79,8 @@ const Tabs = styled.div`
   padding: 23px 0;
   color: #2D1F63;
   position: relative;
-  :after{
+
+  :after {
     content: "";
     border-bottom: solid 4px #2D1F63;
     background-color: #2D1F63;
@@ -114,7 +112,7 @@ const Button = styled.button`
   background: transparent;
   border-radius: 3px;
   display: block;
-  padding: 20px 15px;
+  padding: 15px 30px;
   color: #2D1F63;
 
   :hover {

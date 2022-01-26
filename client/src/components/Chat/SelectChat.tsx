@@ -1,16 +1,9 @@
 import styled from 'styled-components'
-import NextIcon from '../icons/NextIcon'
 
-interface Props {
-  selectChat: any
-}
-export default function SelectChat({selectChat}: Props) {
+export default function SelectChat() {
   return (
     <ChatContainer>
-      <Form>
-        <Input placeholder='Choose the chat' type='text' />
-        <Button onClick={selectChat}><NextIcon /></Button>
-      </Form>
+        <Button>Select chat to start messaging</Button>
       <BackgroundImage src={background}/>
     </ChatContainer>
   )
@@ -35,48 +28,17 @@ const BackgroundImage = styled.img`
   bottom: 80px;
 `
 
-const Form = styled.form`
-  position: relative;
-  top: 170px;
-  width: 300px;
-  margin: 0 auto;
-`
-
-const Input = styled.input`
-  width: calc(100% - 71px);
-  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
-  text-align: left;
-  font-size: 20px;
-  color: #7976d9;
-  padding: 15px 40px 15px 25px;
-  border-radius: 50px;
-  outline: none;
-  background-color: rgba(152, 160, 249, 0.28);
-  border: 3px solid transparent;
-
-  ::placeholder {
-    color: #7976d9;
-    font-weight: 400;
-  }
-
-  :focus {
-    border: 3px solid #7976d9;
-  }
-`
-
 const Button = styled.button`
-  position: absolute;
-  border: none;
-  cursor: pointer;
   outline: none;
-  background: transparent;
-  color: #7976d9;
-  border-radius: 3px;
-  top: 12px;
+  border: 0;
+  background: #7976d9;
+  color: #fff;
+  margin: 30% auto 0 auto;
   right: 10px;
-  padding: 0;
-
-  :hover {
-    opacity: .7;
-  }
+  padding: 15px;
+  font-size: 16px;
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
 `

@@ -1,41 +1,112 @@
 import styled from 'styled-components'
 import NextIcon from '../icons/NextIcon'
+import { User } from '../../../../types'
 
+interface Props {
+  user: User
+}
 
-export default function Messages() {
+export default function Messages({ user }: Props) {
   const messages = [
     {
       id: 1, text: 'LMAO! Cool!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 1, name: 'Nick' }
     },
     {
-      id: 2, text: 'LMAO! dadasda!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 2, name: 'Nick' }
+      id: 2, text: 'LMAO! Cool!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 1, name: 'Nick' }
+    },
+    {
+      id: 3, text: 'LMAO! dadasda!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 3, name: 'Vlad' }
+    },
+    {
+      id: 4, text: 'LMAO! Cool!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 1, name: 'Nick' }
+    },
+    {
+      id: 4, text: 'LMAO! Cool!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 1, name: 'Nick' }
+    },
+    {
+      id: 3, text: 'LMAO! dadasda!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 3, name: 'Vlad' }
+    },
+    {
+      id: 3, text: 'LMAO! dadasda!scsnwdwjndjnwdnj', createdAt: '18:33', user: { id: 3, name: 'Vlad' }
     }
   ]
 
   // const messageFriend = messages.find((friend) => friend.user.id === 1)
+
   // const myMessage = messages.find((friend) => friend.user.id === 2)
 
   return (
     <ChatContainer>
+      <HeaderChat><h2>Nick</h2></HeaderChat>
       <Chat>
-        {messages?.map((message: any) => (
-          <FriendMessage key={message.user}>
-            <span>{message.text}</span>
-          </FriendMessage>
-        ))}
-        {messages?.map((message: any) => (
-          <YourMessage key={message.user}>
-            <span>{message.text}</span>
-          </YourMessage>
-        ))}
+        <ChatItem>
+          <ChatMessages>
+            {messages?.map((message: any) => (
+              <ChatMessage key={message.user.name} isMine={user.id === message.user.id}>
+                <ChatMessageContent isMine={user.id === message.user.id}>
+                  <Title isMine={user.id === message.user.id}>
+                    {message.user.name}
+                  </Title>
+                  {message.text}
+                </ChatMessageContent>
+              </ChatMessage>
+            ))}
+          </ChatMessages>
+        </ChatItem>
       </Chat>
       <SendMessage>
-      <Input placeholder='Your message' type='text'/>
-      <Button><NextIcon /></Button>
+        <Input placeholder='Your message' type='text' />
+        <Button><NextIcon /></Button>
       </SendMessage>
     </ChatContainer>
   )
 }
+
+const ChatItem = styled.div`
+  display: flex;
+  align-items: flex-start;
+`
+
+const HeaderChat = styled.div`
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid;
+
+  h2{
+    margin: 0;
+  }
+`
+
+const ChatMessages = styled.div`
+  flex: auto;
+`
+
+const ChatMessage = styled.div<{ isMine: User }>`
+  display: flex;
+  align-items: center;
+  margin: 10px 10px 10px 0;
+  ${props => props.isMine ? 'flex-direction: row-reverse; margin: 10px 0 10px 10px;' : ''}
+`
+
+const Title = styled.span<{ isMine: User}>`
+  display: flex;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-underline-position: under;
+  font-weight: bold;
+  ${props => props.isMine ? 'flex-direction: row-reverse; ' : ''}
+`
+
+const ChatMessageContent = styled.div<{ isMine: User}>`
+  padding: 20px 30px 20px 10px;
+  display: inline-block;
+  border-radius: 0 50px 50px 0;
+  background: rgb(155,154,173);
+  background: linear-gradient(
+    90deg
+    ,rgba(155,154,173,1) 0%,rgba(166,166,191,1) 36%,rgba(180,187,221,0.7917542016806722) 98%);
+  ${props => props.isMine ? 'background: linear-gradient(90deg, rgba(125, 132, 213, 0.768717) 1.95%, rgba(152, 160, 250, 0) 124.43%); padding: 20px 10px 20px 30px;  border-radius: 50px 0 0 50px;' : ''}
+`
 
 const SendMessage = styled.div`
   position: relative;
@@ -45,22 +116,19 @@ const SendMessage = styled.div`
 
 const Input = styled.input`
   display: block;
+  border: 1px solid ;
   width: 100%;
   height: 50px;
   border-radius: 30px;
-  box-shadow: rgb(0 0 0 / 16%) 0 1px 4px;
   text-align: left;
   font-size: 20px;
+  padding-left: 20px;
+  outline: none;
   color: #7976d9;
-}
 
   ::placeholder {
     color: #7976d9;
     font-weight: 400;
-  }
-
-  :focus {
-    border: 3px solid #7976d9;
   }
 `
 
@@ -72,8 +140,8 @@ const Button = styled.button`
   background: transparent;
   color: #7976d9;
   border-radius: 3px;
-  top: 12px;
-  right: 10px;
+  top: 9px;
+  right: -10px;
   padding: 0;
 
   :hover {
@@ -94,28 +162,11 @@ const ChatContainer = styled.div`
 const Chat = styled.form`
   position: relative;
   width: 100%;
-  height: 75%;
+  height: 66%;
   overflow: auto;
-`
+  margin-bottom: 20px;
 
-const FriendMessage = styled.div`
-  float: left;
-  width: max-content;
-  margin: 20px 0;
-  padding: 20px;
-  background: rgb(151, 160, 251);
-  background: linear-gradient(90deg, rgba(151, 160, 251, 1) 0%, rgba(216, 218, 247, 1) 62%, rgba(234, 235, 246, 0.8981967787114846) 100%);
-  border-radius: 68px;
-  display: block;
-`
-
-const YourMessage = styled.div`
-  float: right;
-  width: max-content;
-  margin: 20px 0;
-  padding: 20px;
-  display: block;
-  background: rgb(32, 29, 82);
-  background: linear-gradient(90deg, rgba(32, 29, 82, 0.850577731092437) 0%, rgba(125, 132, 212, 0.8225665266106442) 89%);
-  border-radius: 47.5px;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 `

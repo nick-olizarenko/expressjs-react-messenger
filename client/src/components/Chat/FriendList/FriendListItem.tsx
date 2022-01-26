@@ -1,34 +1,31 @@
 import styled from 'styled-components'
+import { User } from '../../../../../types'
 
-import { ChatPreview } from '../../../../../types'
+interface Props {
+  user: User
+  isSelected: boolean
+  onClick: (userId: number) => void
+}
 
-export default function ChatListItem(chat: ChatPreview) {
+export default function FriendListItem({ user, isSelected, onClick }: Props) {
   return (
-    <Wrapper>
+    <Wrapper onClick={() => onClick(user.id)} isSelected={isSelected}>
       <Avatar>
-        <img src={`https://picsum.photos/id/${100 + chat.id}/100`} alt={chat.title} />
+        <img src={`https://picsum.photos/id/${100 + user.id}/100`} alt={user.nickname} />
       </Avatar>
       <Preview>
-        <Title>{chat.title}</Title>
-        <Message>
-              <span>
-                {chat.lastMessage.sender.nickname}:
-              </span>
-          <span>{chat.lastMessage.text}</span>
-        </Message>
+        <Title>{user.nickname}</Title>
       </Preview>
-      <Info>
-        <Date>{chat.lastMessage.date}</Date>
-      </Info>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div`
-  padding: 15px 25px;
+const Wrapper = styled.div<{isSelected: boolean}>`
+  padding: 15px 10px;
   display: flex;
   position: relative;
   cursor: pointer;
+  ${props => props.isSelected ? 'background: rgba(0, 0, 0, 0.12);' : ''}
 
   :after {
     content: '';
@@ -74,26 +71,4 @@ const Title = styled.span`
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 4px;
-`
-
-const Message = styled.div`
-  font-size: 13px;
-  color: #6C6C6C;
-
-  span:first-of-type {
-    font-weight: bold;
-    margin-right: 3px;
-  }
-`
-
-const Info = styled.div`
-  width: 15%;
-  overflow: visible;
-  text-align: right;
-  padding-top: 7px;
-`
-
-const Date = styled.div`
-  font-size: 13px;
-  color: #6C6C6C;
 `

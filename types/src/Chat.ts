@@ -1,6 +1,6 @@
 import { User } from './User'
 
-export interface ChatPreview extends Omit<Chat, 'messages' | 'type'> {
+export interface ChatPreview extends Omit<Chat, 'messages' | 'type' | 'memberIds'> {
   id: number;
   title: string;
   lastMessage: Omit<Message, 'id' | 'chatId'>;
@@ -20,4 +20,10 @@ export interface Message {
   chatId: number;
   text: string;
   date: string;
+}
+
+export interface MyFriends {
+  id: number;
+  title: string;
+  avatar: string
 }
