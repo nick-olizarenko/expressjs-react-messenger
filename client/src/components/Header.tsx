@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
 import { User } from '../../../types'
-import NotificationIcon from './icons/NotificationIcon'
-import HeartIcon from './icons/HeartIcon'
-import UserIcon from './icons/UserIcon'
 import InfoIcon from './icons/InfoIcon'
 import { useRouter } from 'next/router'
 

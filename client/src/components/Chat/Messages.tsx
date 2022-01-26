@@ -101,6 +101,8 @@ const ChatMessageContent = styled.div<{ isMine: User}>`
   padding: 20px 30px 20px 10px;
   display: inline-block;
   border-radius: 0 50px 50px 0;
+  font-family: Raleway,serif;
+  font-style: normal;
   background: rgb(155,154,173);
   background: linear-gradient(
     90deg

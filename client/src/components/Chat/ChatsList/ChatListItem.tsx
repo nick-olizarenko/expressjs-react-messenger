@@ -2,9 +2,14 @@ import styled from 'styled-components'
 
 import { ChatPreview } from '../../../../../types'
 
-export default function ChatListItem(chat: ChatPreview) {
+interface Props {
+  chat: ChatPreview
+  onClick: (userId: number) => void
+}
+
+export default function ChatListItem({chat, onClick}: Props) {
   return (
-    <Wrapper>
+    <Wrapper onClick={() => onClick(chat.id)}>
       <Avatar>
         <img src={`https://picsum.photos/id/${100 + chat.id}/100`} alt={chat.title} />
       </Avatar>

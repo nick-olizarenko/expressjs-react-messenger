@@ -28,7 +28,7 @@ export default function ChatLayout({ user }: Props) {
         {query.chatId === 'new' && <FriendList userId={user.id}/>}
         {query.chatId === '1' && <Messages user={user}/>}
 
-        {/*{query.chatId !== 'new' && <>chat messages</>}*/}
+        {query.chatId !== 'new' && <>chat messages</>}
       </ContentWrapper>
     </ChatContainer>
   )

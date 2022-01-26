@@ -4,6 +4,7 @@ import SearchIcon from '../../icons/SearchIcon'
 import ChatListItem from './ChatListItem'
 import { ChatPreview } from '../../../../../types'
 import { useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
 
 interface Props {
   userId: number
@@ -33,6 +34,11 @@ export default function ChatsList({ userId }: Props) {
     return chats.filter(chat => chat.title.toLowerCase().includes(searchString) || chat.lastMessage.text.toLowerCase().includes(searchString))
   }, [search, chats])
 
+  const router = useRouter()
+  const onCreateChat = (userId: number) => {
+    router.push({ query: { chatId: "1" } })
+  }
+
   return (
     <ChatsContainer>
       <Search>
@@ -42,7 +48,8 @@ export default function ChatsList({ userId }: Props) {
         </Form>
       </Search>
       <ChatsListWrapper>
-        {filteredChats.map(chat => (<ChatListItem key={chat.id} {...chat} />))}
+        {filteredChats.map(chat => (<ChatListItem chat={chat} key={chat.id} {...chat}
+                                                  onClick={(userId) => onCreateChat(userId)} />))}
       </ChatsListWrapper>
     </ChatsContainer>
   )
