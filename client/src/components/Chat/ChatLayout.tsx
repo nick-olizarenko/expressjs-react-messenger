@@ -20,7 +20,7 @@ export default function ChatLayout ({ user }: Props) {
   const [connectedChats, setConnectedChats] = useState<number[]>([])
 
   useEffect(() => {
-    const newSocket = io(`https://messenger.tequiladev.space`)
+    const newSocket = io(`https://tequiladev.space`)
     setSocket(newSocket)
   }, [setSocket])
 
