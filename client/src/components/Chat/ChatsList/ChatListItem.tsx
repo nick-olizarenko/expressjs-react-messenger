@@ -1,15 +1,17 @@
 import styled from 'styled-components'
 
 import { ChatPreview } from '../../../../../types'
+import { dateToLocaleString } from '../../../utils'
 
 interface Props {
   chat: ChatPreview
+  isSelected: boolean
   onClick: (userId: number) => void
 }
 
-export default function ChatListItem({chat, onClick}: Props) {
+export default function ChatListItem ({ chat, onClick, isSelected }: Props) {
   return (
-    <Wrapper onClick={() => onClick(chat.id)}>
+    <Wrapper onClick={() => onClick(chat.id)} isSelected={isSelected}>
       <Avatar>
         <img src={`https://picsum.photos/id/${100 + chat.id}/100`} alt={chat.title} />
       </Avatar>
@@ -23,13 +25,13 @@ export default function ChatListItem({chat, onClick}: Props) {
         </Message>
       </Preview>
       <Info>
-        <Date>{chat.lastMessage.date}</Date>
+        <Date>{dateToLocaleString(chat.lastMessage.date)}</Date>
       </Info>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isSelected: boolean }>`
   padding: 15px 25px;
   display: flex;
   position: relative;
@@ -46,6 +48,12 @@ const Wrapper = styled.div`
     transition: all .4s;
   }
 
+  ${(props) => props.isSelected ? `
+      background: rgba(0, 0, 0, 0.12);
+          :after {
+      opacity: 0;
+    }
+  `: ''}
   :hover {
     background: rgba(0, 0, 0, 0.12);
 
@@ -92,7 +100,8 @@ const Message = styled.div`
 `
 
 const Info = styled.div`
-  width: 15%;
+  position: absolute;
+  right: 5px;
   overflow: visible;
   text-align: right;
   padding-top: 7px;

@@ -11,7 +11,7 @@ export default function FriendListItem({ user, isSelected, onClick }: Props) {
   return (
     <Wrapper onClick={() => onClick(user.id)} isSelected={isSelected}>
       <Avatar>
-        <img src={`https://picsum.photos/id/${100 + user.id}/100`} alt={user.nickname} />
+        <img src={`https://picsum.photos/id/${user.id}/100`} alt={user.nickname} />
       </Avatar>
       <Preview>
         <Title>{user.nickname}</Title>

@@ -1,17 +1,15 @@
 import { User } from './User'
 
-export interface ChatPreview extends Omit<Chat, 'messages' | 'type' | 'memberIds'> {
-  id: number;
-  title: string;
-  lastMessage: Omit<Message, 'id' | 'chatId'>;
+export interface ChatPreview extends Pick<Chat, 'id' | 'title'> {
+  lastMessage: Omit<Message, 'id' | 'chatId'> | null;
 }
 
 export interface Chat {
   id: number;
-  title?: string;
+  title: string;
   type: 'direct' | 'group';
   messages: Message[];
-  memberIds: number[];
+  memberIds?: number[];
 }
 
 export interface Message {
@@ -19,7 +17,7 @@ export interface Message {
   sender: User;
   chatId: number;
   text: string;
-  date: string;
+  date: Date;
 }
 
 export interface MyFriends {

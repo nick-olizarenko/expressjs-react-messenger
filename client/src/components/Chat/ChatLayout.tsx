@@ -3,38 +3,50 @@ import styled from 'styled-components'
 import { User } from '../../../../types'
 import Header from '../Header'
 import ChatsList from './ChatsList/ChatsList'
-import FriendList from './FriendList/FriendList'
+import CreateChat from './CreateChat/CreateChat'
 import SelectChat from './SelectChat'
 import { useRouter } from 'next/router'
-import Messages from './Messages'
+import ChatContainer from './ChatContainer'
+import { useEffect, useState } from 'react'
+import { io, Socket } from 'socket.io-client'
 
 interface Props {
   user: User
 }
 
-export default function ChatLayout({ user }: Props) {
-  const { query } = useRouter()
+export default function ChatLayout ({ user }: Props) {
+  const router = useRouter()
+  const [socket, setSocket] = useState<Socket>()
+  const [connectedChats, setConnectedChats] = useState<number[]>([])
 
-  console.log(query)
+  useEffect(() => {
+    const newSocket = io(`http://${window.location.hostname}:3001`)
+    setSocket(newSocket)
+  }, [setSocket])
+
+  const onNewChat = (chatId: number) => {
+    socket.emit('joinChat', chatId)
+    setConnectedChats([...connectedChats, chatId])
+    router.push({ query: { chatId } })
+  }
+
   return (
-    <ChatContainer>
+    <ChatLayoutWrapper>
       <Header user={user} />
-      <ChatsList userId={user.id} />
+      <ChatsList socket={socket} userId={user.id} onConnectedChats={(chats) => setConnectedChats(chats)} />
       <ContentWrapper>
-        {!query.chatId && (
-          <SelectChat />
+        {!router.query.chatId && <SelectChat />}
+        {router.query.chatId === 'new' &&
+        <CreateChat userId={user.id} onNewChat={(chatId: number) => onNewChat(chatId)} />}
+        {router.query.chatId && socket && connectedChats.includes(Number(router.query.chatId)) && (
+          <ChatContainer socket={socket} user={user} />
         )}
-
-        {query.chatId === 'new' && <FriendList userId={user.id}/>}
-        {query.chatId === '1' && <Messages user={user}/>}
-
-        {query.chatId !== 'new' && <>chat messages</>}
       </ContentWrapper>
-    </ChatContainer>
+    </ChatLayoutWrapper>
   )
 }
 
-const ChatContainer = styled.div`
+const ChatLayoutWrapper = styled.div`
   background-color: white;
   width: 100%;
   height: 100%;
@@ -42,9 +54,9 @@ const ChatContainer = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  width: 70%;
+  width: 65%;
   height: 100%;
   display: flex;
   flex-flow: column;
-  box-shadow: 4px 0 7px -2px #E5E5E5;
+  box-shadow: 4px 0 7px -2px #e5e5e5;
 `

@@ -31,7 +31,7 @@ export default function Index () {
 
   const onUserCreate = useCallback((user: User) => {
     localStorage.setItem('userId', user.id.toString())
-    console.log('here')
+
     setUser(user)
     setScreen('chat')
   }, [])

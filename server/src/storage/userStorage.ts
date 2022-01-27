@@ -1,7 +1,25 @@
 import { User } from '../../../types'
 
 export default class UserStorage {
-  private users: User[] = []
+  private users: User[] = [
+    {
+      id: 1,
+      nickname: 'Nikita',
+    },
+    {
+      id: 2,
+      nickname: 'Vladyslav',
+    },
+    {
+      id: 3,
+      nickname: 'Bartek',
+    },
+    {
+      id: 4,
+      nickname: 'Hanna',
+    },
+  ]
+
   private getNextId = () => this.users.length + 1
 
   addUser (nickname: string): User {
@@ -16,5 +34,9 @@ export default class UserStorage {
     const user = this.users.find(user => user.id === id)
 
     return user || null
+  }
+
+  getUsers (): User[] {
+    return this.users
   }
 }

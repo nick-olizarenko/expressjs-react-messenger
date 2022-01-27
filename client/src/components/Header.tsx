@@ -4,12 +4,11 @@ import { User } from '../../../types'
 import InfoIcon from './icons/InfoIcon'
 import { useRouter } from 'next/router'
 
-
 interface Props {
   user: User
 }
 
-export default function Header({ user }: Props) {
+export default function Header ({ user }: Props) {
   const router = useRouter()
   const onCreateChat = () => {
     router.push({ query: { chatId: 'new' } })

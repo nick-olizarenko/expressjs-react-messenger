@@ -3,61 +3,116 @@ import styled from 'styled-components'
 import SearchIcon from '../../icons/SearchIcon'
 import ChatListItem from './ChatListItem'
 import { ChatPreview } from '../../../../../types'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+import Axios from 'axios'
+import { Socket } from 'socket.io-client'
 
 interface Props {
+  socket: Socket
   userId: number
+  onConnectedChats: (chats: number[]) => void
 }
 
-export default function ChatsList({ userId }: Props) {
-  const chats: ChatPreview[] = [
-    {
-      id: 1,
-      title: 'Super Dooper',
-      lastMessage: { sender: {id: 1, nickname: 'Nick'}, text: 'Wow! Incredible!', date: '22:44' }
-    },
-    {
-      id: 2,
-      title: 'Vladyslav',
-      lastMessage: { sender: {id: 1, nickname: 'Nick'}, text: 'LMAO! Cool!', date: '18:33' }
-    }
-  ]
-  const [search, setSearch] = useState<string>()
-  const filteredChats = useMemo(() => {
-    if (!search) {
-      return chats
-    }
-
-    const searchString = search.toLowerCase()
-
-    return chats.filter(chat => chat.title.toLowerCase().includes(searchString) || chat.lastMessage.text.toLowerCase().includes(searchString))
-  }, [search, chats])
-
+export default function ChatsList({ socket, userId, onConnectedChats }: Props) {
+  const [forceUpdateKey, forceChatUpdate] = useState<number>(0)
+  const [chats, setChats] = useState<ChatPreview[]>()
   const router = useRouter()
-  const onCreateChat = (userId: number) => {
-    router.push({ query: { chatId: "1" } })
+  const [search, setSearch] = useState<string>()
+  const [connectedChats, setConnectedChats] = useState<number[]>([])
+  const selectedChatId: string | undefined = router.query.chatId as string
+
+  useEffect(() => {
+    async function getChats() {
+      try {
+        const { data } = await Axios.get(`/api/user/${userId}/chats`)
+
+        setChats(data.chats)
+      } catch (err) {
+        console.error('Error loading chat', err)
+      }
+    }
+
+    getChats()
+  }, [])
+
+  useEffect(() => {
+    const _chats = chats
+    if (_chats && _chats.length) {
+      for (const _chat of _chats) {
+        if (!connectedChats.includes(_chat.id)) {
+          socket.emit('joinChat', _chat.id)
+          setConnectedChats([...connectedChats, _chat.id])
+        }
+      }
+
+      socket.on('newMessage', (data) => {
+        const chatIndex = _chats.findIndex((chat) => chat.id === data.chatId)
+
+        if (chatIndex > -1) {
+          _chats[chatIndex].lastMessage = data.message
+          setChats(_chats)
+          forceChatUpdate(forceUpdateKey + 1)
+        }
+      })
+    }
+  }, [socket, chats, connectedChats])
+
+  useEffect(() => {
+    onConnectedChats(connectedChats)
+  }, [connectedChats])
+
+  const filteredChats = useMemo(() => {
+    if (chats) {
+      const searchString = (search || '').toLowerCase()
+
+      return chats
+        .filter(
+          (chat) =>
+            chat.lastMessage &&
+            chat.lastMessage.text &&
+            (chat.title.toLowerCase().includes(searchString) ||
+              chat.lastMessage.text.toLowerCase().includes(searchString))
+        )
+        .sort((a, b) => new Date(b.lastMessage.date).getTime() - new Date(a.lastMessage.date).getTime())
+    }
+  }, [search, chats, forceUpdateKey])
+
+  const onSelectChat = (chatId: number) => {
+    router.push({ query: { chatId: chatId.toString() } })
+  }
+
+  if (!chats) {
+    return null
   }
 
   return (
     <ChatsContainer>
       <Search>
         <Form>
-          <Input placeholder='Search...' type='text' onChange={e => setSearch(e.target.value)} />
-          <Button><SearchIcon /></Button>
+          <Input placeholder="Search..." type="text" onChange={(e) => setSearch(e.target.value)} />
+          <Button>
+            <SearchIcon />
+          </Button>
         </Form>
       </Search>
       <ChatsListWrapper>
-        {filteredChats.map(chat => (<ChatListItem chat={chat} key={chat.id} {...chat}
-                                                  onClick={(userId) => onCreateChat(userId)} />))}
+        {filteredChats.map((chat) => (
+          <ChatListItem
+            chat={chat}
+            isSelected={selectedChatId === chat.id.toString()}
+            key={chat.id + chat.lastMessage.text}
+            onClick={(userId) => onSelectChat(userId)}
+          />
+        ))}
       </ChatsListWrapper>
     </ChatsContainer>
   )
 }
 
 const Search = styled.div`
-  border-bottom: solid 2px #E5E5E5;
-  box-shadow: 0 2px 4px #E5E5E5;
+  border-bottom: solid 2px #e5e5e5;
+  box-shadow: 0 2px 4px #e5e5e5;
 `
 
 const Form = styled.form`
@@ -72,10 +127,10 @@ const Input = styled.input`
   padding: 30px 40px 30px 25px;
   outline: none;
   border: none;
-  color: #6C6C6C;
+  color: #6c6c6c;
 
   ::placeholder {
-    color: #6C6C6C;
+    color: #6c6c6c;
     font-weight: 400;
     font-size: 15px;
   }
@@ -93,18 +148,18 @@ const Button = styled.button`
   padding: 0;
 
   :hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 `
 
 const ChatsContainer = styled.div`
-  width: 30%;
+  width: 35%;
   height: 100%;
   display: flex;
   flex-flow: column;
   padding: 4px 0;
-  border-right: solid 2px #E5E5E5;
-  box-shadow: 4px 0 7px -2px #E5E5E5;
+  border-right: solid 2px #e5e5e5;
+  box-shadow: 4px 0 7px -2px #e5e5e5;
 `
 
 const ChatsListWrapper = styled.div``
