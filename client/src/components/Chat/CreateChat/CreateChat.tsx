@@ -84,20 +84,6 @@ const FriendsListContainer = styled.div`
   top: 100px;
   padding: 0 90px;
 `
-const InputForm = styled.input`
-  width: calc(100% - 69px);
-  text-align: left;
-  font-size: 20px;
-  padding: 15px 40px 15px 25px;
-  margin-bottom: 10px;
-  color: #6c6c6c;
-
-  ::placeholder {
-    color: #6c6c6c;
-    font-weight: 400;
-    font-size: 15px;
-  }
-`
 
 const Button = styled.div`
   button {
@@ -124,4 +110,6 @@ const Button = styled.div`
 
 const FriendListWrapper = styled.div`
   background: #f5f5f5;
+  overflow: auto;
+  height: 50%;
 `
