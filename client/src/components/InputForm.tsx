@@ -24,7 +24,7 @@ const InputStyles = styled.input`
   text-align: left;
   font-size: 20px;
   color: #7976d9;
-  padding: 15px 40px 15px 25px;
+  padding: 10px 40px 10px 25px;
   border-radius: 50px;
   outline: none;
   background-color: rgba(152, 160, 249, 0.28);
@@ -33,6 +33,7 @@ const InputStyles = styled.input`
   ::placeholder {
     color: #7976d9;
     font-weight: 400;
+    font-size: 16px;
   }
 
   :focus {
@@ -54,9 +55,13 @@ const ButtonStyles = styled.button`
   background: transparent;
   color: #7976d9;
   border-radius: 3px;
-  top: 12px;
-  right: 10px;
+  top: 8px;
+  right: 7px;
   padding: 0;
+
+
+
+
 
   :hover {
     opacity: .7;
